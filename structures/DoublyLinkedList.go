@@ -31,6 +31,15 @@ func NewDLinkNode(key interface{}, val interface{}) *DLinkedNode {
 	return &DLinkedNode{key: key, val: val}
 }
 
+// Empty 链表方法-链表是否为空
+func (list *DLinkedList) Empty() bool {
+	if list.head.next.next == nil && list.head.next.key == nil && list.head.next.val == nil {
+		return true
+	} else {
+		return false
+	}
+}
+
 // RemoveNode 链表方法-移除一个节点
 func (list *DLinkedList) RemoveNode(node *DLinkedNode) {
 	node.pre.next = node.next
