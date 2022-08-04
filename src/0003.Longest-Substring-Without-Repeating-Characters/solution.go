@@ -1,6 +1,8 @@
 package leetcode
 
-import "strings"
+import (
+	"strings"
+)
 
 // lengthOfLongestSubstring
 // @Description: 无无重复字符的最长子串【暴力破解法】
@@ -39,3 +41,39 @@ func lengthOfLongestSubstring(s string) int {
 // c a b c => a b c => 3
 // a b c b => c b => 2
 // c b b => b => 1
+
+// lengthOfLongestSubstring1
+// @Description: 位图
+func lengthOfLongestSubstring1(s string) int {
+	if len(s) == 0 {
+		return 0
+	}
+
+	var bitSet [256]bool
+	result, left, right := 0, 0, 0
+	for left < len(s) {
+		// 这里解释一下为什么 bitSet 作为一个数组类型可以存储 s[right]
+		// 比如 s = "abc"  那么 s[0] 是多少呢，用PHP的话我们可能下意识就觉得会是 “a”
+		// 但是在 Golang 中，对字符串取下标只对纯ASCII码的字符串有效且取出的是字符的ASCII码
+		// 也就是 s[0] = 97 所以取出的是一个 int 类型的值，完全可以作为一个数组的下标
+
+		// 若 bitSet 中存在 s[right] 字符，则 bitSet 最左边的字符设置为 false
+		// 思路在于 不管当前的字符是和无重复子串的第一个重复的还是中间部分的字重复的，首部的字符都将被舍弃
+		// 例：无重复字符串 abcd 若循环中的元素为 d 则 d 前面的所有子串的都是必然需要被舍弃的
+		// d第一次出现后 right没有变 下次循环依然为 d 也就是一直会循环到 left 也为 d  新的无重复子串为 d
+		if bitSet[s[right]] {
+			bitSet[s[left]] = false
+			left++
+		} else {
+			bitSet[s[right]] = true
+			right++
+		}
+		if result < right-left {
+			result = right - left
+		}
+		if left+right >= len(s) || right >= len(s) {
+			break
+		}
+	}
+	return result
+}
