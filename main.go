@@ -5,11 +5,28 @@ import (
 )
 
 func main() {
-	s := "PAYPALISHIRING"
+	//s := "PAYPALISHIRING"
 	// 最长回文子串
 	//fmt.Println(longestPalindrome(s))
 	// Z 字形变换
-	fmt.Println(convert(s, 4))
+	//fmt.Println(convert(s, 4))
+	// 整数反转
+	x := -123
+	fmt.Println(reverse(x))
+}
+
+func reverse(x int) int {
+	tmp := 0
+	for x != 0 {
+		// tmp 从 x 的个位数开始每次进一位(扩大10)
+		tmp = tmp*10 + x%10
+		// x 从个位数开始每次退一位(缩小10)
+		x = x / 10
+	}
+	if tmp > 1<<31-1 || tmp < -(1<<31) {
+		return 0
+	}
+	return tmp
 }
 
 func convert(s string, numRows int) string {
