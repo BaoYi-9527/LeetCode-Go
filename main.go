@@ -11,8 +11,37 @@ func main() {
 	// Z 字形变换
 	//fmt.Println(convert(s, 4))
 	// 整数反转
-	x := -123
-	fmt.Println(reverse(x))
+	//x := -123
+	//fmt.Println(reverse(x))
+	x := 1001
+	fmt.Println(isPalindrome(x))
+}
+
+func isPalindrome(x int) bool {
+	// 边界条件
+	if x < 0 {
+		return false
+	}
+	if x < 10 {
+		return true
+	}
+	if x%10 == 0 {
+		return false
+	}
+	// 将数分解为数组
+	arr := make([]int, 0, 32)
+	for x > 0 {
+		arr = append(arr, x%10)
+		x = x / 10
+	}
+	sz := len(arr)
+	// 头尾对比
+	for i, j := 0, sz-1; i <= j; i, j = i+1, j-1 {
+		if arr[i] != arr[j] {
+			return false
+		}
+	}
+	return true
 }
 
 func reverse(x int) int {
