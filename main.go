@@ -15,8 +15,70 @@ func main() {
 	//fmt.Println(reverse(x))
 	//x := 1001
 	//fmt.Println(isPalindrome(x))
-	height := []int{1, 8, 6, 2, 5, 4, 8, 3, 7}
-	fmt.Println(maxArea(height))
+	//height := []int{1, 8, 6, 2, 5, 4, 8, 3, 7}
+	//fmt.Println(maxArea(height))
+
+	num := 58
+	fmt.Println(intToRoman(num))
+}
+
+func intToRoman(num int) string {
+	// 1 < num < 3999
+	romanMap := map[int]string{
+		1:    "I",
+		4:    "IV",
+		5:    "V",
+		9:    "IX",
+		10:   "X",
+		40:   "XL",
+		50:   "L",
+		90:   "XC",
+		100:  "C",
+		400:  "CD",
+		500:  "D",
+		900:  "CM",
+		1000: "M",
+	}
+	intMap := map[int]string{
+		1: "I",
+		2: "X",
+		3: "C",
+		4: "M",
+	}
+	intArr := []int{1, 10, 100}
+	romanStr := ""
+
+	for i := 1; i <= 4; i++ {
+		currentStr := ""
+		if i < 4 {
+			remainder := num % 10
+			num = num / 10
+			if remainder > 1 && remainder < 4 {
+				for remainder > 0 {
+					currentStr = intMap[i] + currentStr
+					remainder--
+				}
+			} else if remainder > 5 && remainder < 9 {
+				currentStr = romanMap[5*intArr[i-1]] + currentStr
+				remainder = remainder - 5
+				for remainder > 0 {
+					currentStr = currentStr + intMap[i]
+					remainder--
+				}
+			} else {
+				currentStr = romanMap[remainder*intArr[i-1]] + currentStr
+			}
+		} else {
+			remainder := num % 10
+			num = num / 10
+			for remainder > 0 {
+				currentStr = "M" + currentStr
+				remainder--
+			}
+		}
+		romanStr = currentStr + romanStr
+	}
+	return romanStr
 }
 
 func maxArea(height []int) int {
