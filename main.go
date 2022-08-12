@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	//s := "PAYPALISHIRING"
@@ -17,9 +15,28 @@ func main() {
 	//fmt.Println(isPalindrome(x))
 	//height := []int{1, 8, 6, 2, 5, 4, 8, 3, 7}
 	//fmt.Println(maxArea(height))
+	//num := 2300
+	//fmt.Println(intToRoman(num))
+	str := "MCMXCIV"
+	fmt.Println(romanToInt(str))
+}
 
-	num := 58
-	fmt.Println(intToRoman(num))
+func romanToInt(s string) int {
+	symbolsMap := map[string]int{
+		"M": 1000, "CM": 900, "D": 500, "CD": 400, "C": 100, "XC": 90, "L": 50, "XL": 40, "X": 10, "IX": 9, "V": 5, "IV": 4, "I": 1,
+	}
+	max, res, i := 0, 0, len(s)-1
+	for i >= 0 {
+		current := symbolsMap[string(s[i])]
+		if current >= max {
+			res = res + current
+			max = current
+		} else {
+			res = res - current
+		}
+		i--
+	}
+	return res
 }
 
 func intToRoman(num int) string {
